@@ -1,0 +1,356 @@
+{
+    // https://docs.weave.su/namespaces/anti-aim
+    "anti_aim.can_work()": {
+        "prefix": "anti_aim.can_work()",
+        "body": "anti_aim.can_work()",
+        "scope": "lua"
+    },
+    "anti_aim.get_at_target_yaw": {
+        "prefix": "anti_aim.get_at_target_yaw()",
+        "body": "anti_aim.get_at_target_yaw()",
+        "scope": "lua"
+    },
+    // https://docs.weave.su/namespaces/convars
+    "convars.find()": {
+        "prefix": "convars.find()",
+        "body": "convars.find(${1:\"r_aspectratio\"})",
+        "scope": "lua"
+    },
+    // https://docs.weave.su/namespaces/entity
+    "entity.get()": {
+        "prefix": "entity.get()",
+        "body": "entity.get(${1})",
+        "description": "Returns entity by index",
+        "scope": "lua"
+    },
+    "entity.get_by_user_id()": {
+        "prefix": "entity.get_by_user_id()",
+        "body": "entity.get_by_user_id(${1})",
+        "description": "Returns entity by user ID",
+        "scope": "lua"
+    },
+    "entity.me()": {
+        "prefix": "entity.me()",
+        "body": "entity.me()",
+        "description": "Returns local player",
+        "scope": "lua"
+    },
+    "entity.get_players()": {
+        "prefix": "entity.get_players()",
+        "body": "entity.get_players(${1:false}, ${2:false})",
+        "description": "All arguments are optional, by default is false, false, nil. If you return false in callback this player won't included in the return value",
+        "scope": "lua"
+    },
+    // https://docs.weave.su/namespaces/global-vars
+    "global_vars.realtime()": {
+        "prefix": "global_vars.realtime()",
+        "body": "global_vars.realtime()",
+        "description": "Returns the time in seconds since CS:GO was started",
+        "scope": "lua"
+    },
+    "global_vars.framecount()": {
+        "prefix": "global_vars.framecount()",
+        "body": "global_vars.framecount()",
+        "scope": "lua"
+    },
+    "global_vars.curtime()": {
+        "prefix": "global_vars.curtime()",
+        "body": "global_vars.curtime()",
+        "description": "Returns the current time of the server",
+        "scope": "lua"
+    },
+    "global_vars.frametime()": {
+        "prefix": "global_vars.frametime()",
+        "body": "global_vars.frametime()",
+        "description": "Returns the time the last frame took to render",
+        "scope": "lua"
+    },
+    "global_vars.max_clients()": {
+        "prefix": "global_vars.max_clients()",
+        "body": "global_vars.max_clients()",
+        "scope": "lua"
+    },
+    "global_vars.tickcount()": {
+        "prefix": "global_vars.tickcount()",
+        "body": "global_vars.tickcount()",
+        "description": "Returns the current tick",
+        "scope": "lua"
+    },
+    "global_vars.interval_per_tick()": {
+        "prefix": "global_vars.interval_per_tick()",
+        "body": "global_vars.interval_per_tick()",
+        "description": "Returns the delay between each tick",
+        "scope": "lua"
+    },
+    "global_vars.interpolation_amount()": {
+        "prefix": "global_vars.interpolation_amount()",
+        "body": "global_vars.interpolation_amount()",
+        "scope": "lua"
+    },
+    "global_vars.simticks_this_frame()": {
+        "prefix": "global_vars.simticks_this_frame()",
+        "body": "global_vars.simticks_this_frame()",
+        "scope": "lua"
+    },
+    // https://docs.weave.su/namespaces/logs
+    "logs.info()": {
+        "prefix": "logs.info()",
+        "body": "logs.info(${1:\"Info\"})",
+        "scope": "lua"
+    },
+    "logs.error()": {
+        "prefix": "logs.error()",
+        "body": "logs.error(${1:\"Error\"})",
+        "scope": "lua"
+    },
+    "logs.hit()": {
+        "prefix": "logs.hit()",
+        "body": "logs.hit(${1:\"Hit\"})",
+        "scope": "lua"
+    },
+    "logs.buy()": {
+        "prefix": "logs.buy()",
+        "body": "logs.buy(${1:\"Buy\"})",
+        "scope": "lua"
+    },
+    "logs.miss()": {
+        "prefix": "logs.miss()",
+        "body": "logs.miss(${1:\"NO MISSES IN WEAVE\"})",
+        "scope": "lua"
+    },
+    // https://docs.weave.su/namespaces/math
+    "math.random_float()": {
+        "prefix": "math.random_float()",
+        "body": "math.random_float(${1:0}, ${2:1})",
+        "scope": "lua"
+    },
+    "math.random_int()": {
+        "prefix": "math.random_int()",
+        "body": "math.random_int(${1:0}, ${2:1})",
+        "scope": "lua"
+    },
+    // https://docs.weave.su/namespaces/cheat-vars
+    "vars.find()": {
+        "prefix": "vars.find()",
+        "body": "vars.find(${1:\"misc.unlock_cvars\"})",
+        "scope": "lua"
+    },
+    // https://docs.weave.su/namespaces/render
+    "render.text()": {
+        "prefix": "render.text()",
+        "body": "render.text(${1:Font}, ${2:\"text\"}, ${3:vector(100, 100)})",
+        "scope": "lua"
+    },
+    "render.filled_rect()": {
+        "prefix": "render.filled_rect()",
+        "body": "render.filled_rect(${1:vector(100, 100)}, ${2:vector(100, 100)}, ${3:color(255, 255, 255)})",
+        "scope": "lua"
+    },
+    "render.image()": {
+        "prefix": "render.image()",
+        "body": "render.image(${1:texture}, ${2:vector(100, 100)})",
+        "scope": "lua"
+    },
+    "render.create_font()": {
+        "prefix": "render.create_font()",
+        "body": "render.create_font(${1:path}, ${2:size})",
+        "description": "Function won't work inside the callbacks. The only way to create Font is create it on the first lines in your script",
+        "scope": "lua"
+    },
+    "render.create_texture": {
+        "prefix": "render.create_texture",
+        "body": "render.create_texture(${1:path})",
+        "description": "Function won't work inside the callbacks. The only way to create Texture is create it on the first lines in your script",
+        "scope": "lua"
+    },
+    "render.world_to_screen()": {
+        "prefix": "render.world_to_screen()",
+        "body": "render.world_to_screen(${1:vector(x, y, z)})",
+        "scope": "lua"
+    },
+    "render.get_screen_size()": {
+        "prefix": "render.get_screen_size()",
+        "body": "render.get_screen_size()",
+        "scope": "lua"
+    },
+    "render.text_size()": {
+        "prefix": "render.text_size()",
+        "body": "render.text_size(${1:font}, ${2:\"text\"})",
+        "scope": "lua"
+    },
+    // https://docs.weave.su/namespaces/ui
+    "ui.tab()": {
+        "prefix": "ui.tab()",
+        "body": "ui.tab(${1:\"tab\"})",
+        "scope": "lua"
+    },
+    "ui.group()": {
+        "prefix": "ui.group()",
+        "body": "ui.group(${1:\"group\"})",
+        "scope": "lua"
+    },
+    "ui.checkbox": {
+        "prefix": "ui.checkbox",
+        "body": "ui.checkbox(${1:\"checkbox\"})",
+        "scope": "lua"
+    },
+    "ui.slider()": {
+        "prefix": "ui.slider()",
+        "body": "ui.slider(${1:\"slider\"}, ${2:10}, ${3:100})",
+        "scope": "lua"
+    },
+    "ui.dropbox()": {
+        "prefix": "ui.dropbox()",
+        "body": "ui.dropbox(${1:\"dropbox\"}, ${2:false}, ${3:\"hello\"}, ${4:\"world\"})",
+        "scope": "lua"
+    },
+    "ui.color_picker()": {
+        "prefix": "ui.color_picker()",
+        "body": "ui.color_picker(${1:\"color_picker\"})",
+        "scope": "lua"
+    },
+    "ui.button()": {
+        "prefix": "ui.button()",
+        "body": "ui.button(${1:\"button\"})",
+        "scope": "lua"
+    },
+    "ui.text()": {
+        "prefix": "ui.text()",
+        "body": "ui.text(${1:\"text\"})",
+        "scope": "lua"
+    },
+    "ui.register_tab()": {
+        "prefix": "ui.register_tab()",
+        "body": "ui.register_tab(${1:tab})",
+        "scope": "lua"
+    },
+    "ui.update()": {
+        "prefix": "ui.update()",
+        "body": "ui.update()",
+        "description": "Performs a complete UI update",
+        "scope": "lua"
+    },
+    "ui.get_accent()": {
+        "prefix": "ui.get_accent()",
+        "body": "ui.get_accent()",
+        "description": "Returns current accent colors",
+        "scope": "lua"
+    },
+    "ui.override_accent()": {
+        "prefix": "ui.override_accent()",
+        "body": "ui.override_accent(${1:color}, ${2:color})",
+        "description": "Overrides accent colors",
+        "scope": "lua"
+    },
+    "ui.get_menu_position()": {
+        "prefix": "ui.get_menu_position()",
+        "body": "ui.get_menu_position()",
+        "description": "Returns current menu position",
+        "scope": "lua"
+    },
+    "ui.set_menu_position()": {
+        "prefix": "ui.set_menu_position()",
+        "body": "ui.set_menu_position(${1:vector(100, 100)})",
+        "scope": "lua"
+    },
+    "ui.get_menu_size()": {
+        "prefix": "ui.get_menu_size()",
+        "body": "ui.get_menu_size()",
+        "scope": "lua"
+    },
+    "ui.get_dpi_scale()": {
+        "prefix": "ui.get_dpi_scale()",
+        "body": "ui.get_dpi_scale()",
+        "scope": "lua"
+    },
+    // https://docs.weave.su/namespaces/cheat
+    "cheat.username()": {
+        "prefix": "cheat.username()",
+        "body": "cheat.username()",
+        "scope": "lua"
+    },
+    "cheat.build_date()": {
+        "prefix": "cheat.build_date()",
+        "body": "cheat.build_date()",
+        "scope": "lua"
+    },
+    "cheat.print()": {
+        "prefix": "cheat.print()",
+        "body": "cheat.print(${1:\"Get good, get Weave\"})",
+        "description": "Prints output to the console",
+        "scope": "lua"
+    },
+    // https://docs.weave.su/namespaces/client
+    "client.chocked_commands()": {
+        "prefix": "client.chocked_commands()",
+        "body": "client.chocked_commands()",
+        "scope": "lua"
+    },
+    // https://docs.weave.su/namespaces/script
+    "script.save()": {
+        "prefix": "script.save()",
+        "body": "script.save(${1:\"name\"}, ${2:items})",
+        "description": "Saves the passed UIControl states",
+        "scope": "lua"
+    },
+    "script.save_all()": {
+        "prefix": "script.save_all()",
+        "body": "script.save_all(${1:\"name\"})",
+        "description": "Saves the all UIControl states",
+        "scope": "lua"
+    },
+    "script.dumb_base64()": {
+        "prefix": "script.dumb_base64()",
+        "body": "script.dumb_base64(${1:items})",
+        "description": "Return the passed UIControl states from base64 string",
+        "scope": "lua"
+    },
+    "script.dump_all_base64()": {
+        "prefix": "script.dump_all_base64()",
+        "body": "script.dump_all_base64()",
+        "description": "Return the all UIControl states encoded in base64",
+        "scope": "lua"
+    },
+    "script.load()": {
+        "prefix": "script.load()",
+        "body": "script.load(${1:\"name\"}, ${2:items})",
+        "description": "Loads the passed UIControl states",
+        "scope": "lua"
+    },
+    "script.load_all()": {
+        "prefix": "script.load_all()",
+        "body": "script.load_all(${1:\"name\"})",
+        "description": "Loads the all UIControl states",
+        "scope": "lua"
+    },
+    "script.load_base64()": {
+        "prefix": "script.load_base64()",
+        "body": "script.load_base64(${1:\"text\"}, ${2:items})",
+        "description": "Loads the passed UIControl states from base64 string",
+        "scope": "lua"
+    },
+    "script.load_all_base64()": {
+        "prefix": "script.load_all_base64()",
+        "body": "script.load_all_base64(${1:\"text\"})",
+        "description": "Loads the all UIControl states encoded in base64",
+        "scope": "lua"
+    },
+    "script.set_name()": {
+        "prefix": "script.set_name()",
+        "body": "script.set_name(${1:\"name\"})",
+        "description": "Overrides script name",
+        "scope": "lua"
+    },
+    "script.set_version()": {
+        "prefix": "script.set_version()",
+        "body": "script.set_version(${1:\"2.0\"})",
+        "description": "By default is 1.0. The version will be written into each saved configuration. You can override this value if you want to remove backward compatibility with older configurations",
+        "scope": "lua"
+    },
+    // https://docs.weave.su/namespaces/hotkeys
+    "hotkeys.find()": {
+        "prefix": "hotkeys.find()",
+        "body": "hotkeys.find(${1:\"hotkey.doubletap\"})",
+        "scope": "lua"
+    }
+}

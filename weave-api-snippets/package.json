@@ -1,0 +1,22 @@
+{
+    "name": "weave-api-snippets",
+    "displayName": "Weave API Snippets",
+    "description": "Code snippets for the Weave Lua API.",
+    "publisher": "Weave-api-snippet",
+    "license": "UNLICENSED",
+    "version": "1.0.0",
+    "engines": {
+        "vscode": "^1.68.0"
+    },
+    "categories": [
+        "Snippets"
+    ],
+    "contributes": {
+        "snippets": [
+            {
+                "language": "lua",
+                "path": "./snippets/snippets.code-snippets"
+            }
+        ]
+    }
+}

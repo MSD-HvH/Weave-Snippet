@@ -1,0 +1,642 @@
+--- Author: Mased
+--- Thanks: izke
+
+--- Useful links:
+--- https://gamesensical.gitbook.io/docs/developers/netprops
+--- https://wiki.alliedmods.net/Counter-Strike:_Global_Offensive_Events
+
+--- @class AntiAim
+--- @field can_work fun(): boolean;
+--- @field get_at_target_yaw fun(): number
+anti_aim = {};
+
+--- @class Convar
+--- @field find fun(self: Convar, convar_name: string): Convar | nil
+convar = {};
+
+--- @class Entities
+--- Returns entity by index
+--- @field get fun(index: number): Entity | nil
+--- Returns entity by user ID
+--- @field get_by_user_id fun(user_id: number): Entity | nil
+--- Returns local player index
+--- @field me fun(): Entity | nil;
+--- All arguments are optional, by default is `false`, `false`, `nil`. Callback takes `Entity` in arguments and have to return `boolean`. If you return `false` in callback this player won't included in the return value.
+--- @field get_players fun(enemies_only?: boolean, include_dormant?: boolean, callback?: function): Entity[];
+entity = {};
+
+--- @class GlobalVars
+--- Returns the time in seconds since CS:GO was started
+--- @field realtime fun(): number
+--- @field framecount fun(): number
+--- Returns the current time of the server
+--- @field curtime fun(): number
+--- Returns the time the last frame took to render
+--- @field frametime fun(): number
+--- @field max_clients fun(): number
+--- Returns the current tick
+--- @field tickcount fun(): number
+--- Returns the delay between each tick
+--- @field interval_per_tick fun(): number
+--- @field interpolation_amount	fun(): number
+--- @field simticks_this_frame fun(): number
+global_vars = {}
+
+--- @class Logs
+--- @field info fun(message: string)
+--- @field error fun(message: string)
+--- @field hit fun(message: string)
+--- @field buy fun(message: string)
+--- @field miss fun(message: string)
+logs = {}
+
+--- @class Math
+--- @field random_float fun(min: number, max: number): number;
+--- @field random_int fun(min: number, max: number): number;
+math = {}
+
+--- @class Vars
+--- @field find fun(reference: string): CheatVar | nil
+vars = {}
+
+--- @class Render
+--- @field text fun(font: Font, text: string, position: Vector, color?: Color, flags?: number, wrap_width?: number)
+--- @field filled_rect fun(position: Vector, size: Vector, color: Color, rounding?: number, rounding_flags?: number)
+--- @field image fun(texture: Texture, position: Vector, size?: Vector, color?: Color, rounding?: number)
+--- Function won't work inside the callbacks. The only way to create `Font` is create it on the first lines in your script
+--- @field create_font fun(path: string, size: number, flags?: number): Font | nil
+--- Function won't work inside the callbacks. The only way to create `Texture` is create it on the first lines in your script
+--- @field create_texture fun(path: string): Texture | nil
+--- @field world_to_screen fun(world_position: Vector): Vector | { x: number, y: number, z: number } | nil
+--- @field get_screen_size fun(): Vector | { x: number, y: number, z: number }
+--- @field text_size fun(font: Font, text: string, wrap_width?: number): Vector | { x: number, y: number, z: number }
+render = {}
+
+--- @class UI
+--- Creates tab instance
+--- @field tab fun(label: string): UITab | nil
+--- Creates group instance
+--- @field group fun(label: string): UIContainer | nil
+--- @field checkbox fun(label: string): UICheckbox | nil
+--- @field slider fun(label: string, min: number, max: number): UISlider | nil
+--- @field dropbox fun(label: string, multiselect: boolean, ...): UIDropbox | nil
+--- @field color_picker fun(label: string, alpha?: boolean): UIColorPicker | nil
+--- Adds tab to the menu
+--- @field register_tab fun(tab: UITab)
+--- Performs a complete UI update
+--- @field update fun()
+--- Returns current accent colors
+--- @field get_accent fun(): Color
+--- Overrides accent colors
+--- @field override_accent fun(color1: Color, color2: Color)
+--- Returns current menu position
+--- @field get_menu_position fun(): Vector | { x: number, y: number, z: number }
+--- Sets menu position
+--- @field set_menu_position fun(position: Vector)
+--- Returns current menu size
+--- @field get_menu_size fun(): Vector | { x: number, y: number, z: number }
+--- Returns current DPI scale
+--- @field get_dpi_scale fun(): number
+ui = {}
+
+--- @class Cheat
+--- @field username fun(): string
+--- @field build_date fun(): string
+--- Prints output to the console
+--- @field print fun(output: string)
+cheat = {}
+
+--- @class Client
+--- @field choked_commands fun(): number
+client = {}
+
+--- @class Script
+--- Saves the passed `UIControl` states
+--- @field save fun(name: string, ...)
+--- Saves the all `UIControl` states
+--- @field save_all fun(name: string)
+--- Return the passed `UIControl` states from base64 string
+--- @field dump_base64 fun(...): string | nil
+--- Return the all `UIControl` states encoded in base64
+--- @field dump_all_base64 fun(): string | nil
+--- Loads the passed `UIControl` states
+--- @field load fun(name: string, ...)
+--- Loads the all `UIControl` states
+--- @field load_all fun(name: string)
+--- Loads the passed `UIControl` states from base64 string
+--- @field load_base64 fun(text: string, ...)
+--- Loads the all `UIControl` states from base64 string
+--- @field load_all_base64 fun(text: string)
+--- Overrides script name
+--- @field set_name fun(name: string)
+--- By default is `1.0`. The version will be written into each saved configuration. You can override this value if you want to remove backward compatibility with older configurations
+--- @field set_version fun(version: string)
+script = {}
+
+--- @class Hotkeys
+--- @field find fun(key: hotkey_keys): Hotkey
+hotkeys = {}
+
+--- @class Callbacks
+--- List of all [events](https://wiki.alliedmods.net/Counter-Strike:_Global_Offensive_Events)
+--- @field new fun(callback_name: callback_name, fun: fun(event: Event | UserCmd | AntiAimSettings))
+--- @field render fun(callbackFn: fun())
+--- @field pre_move fun(callbackFn: fun(cmd: UserCmd))
+--- @field create_move fun(callbackFn: fun(cmd: UserCmd))
+--- @field post_move fun(callbackFn: fun(cmd: UserCmd))
+--- @field config_save fun(callbackFn: fun(config: CheatConfig))
+--- @field config_load fun(callbackFn: fun(config: CheatConfig))
+--- @field antiaim_setup fun(callbackFn: fun(aa: AntiAimSettings))
+--- @field unload fun(callbackFn: fun())
+--- @field player_death fun(callbackFn: fun(event: Event))
+--- @field other_death fun(callbackFn: fun(event: Event))
+--- @field player_hurt fun(callbackFn: fun(event: Event))
+--- @field item_purchase fun(callbackFn: fun(event: Event))
+--- @field bomb_beginplant fun(callbackFn: fun(event: Event))
+--- @field bomb_abortplant fun(callbackFn: fun(event: Event))
+--- @field bomb_planted fun(callbackFn: fun(event: Event))
+--- @field bomb_defused fun(callbackFn: fun(event: Event))
+--- @field bomb_exploded fun(callbackFn: fun(event: Event))
+--- @field bomb_dropped fun(callbackFn: fun(event: Event))
+--- @field bomb_pickup fun(callbackFn: fun(event: Event))
+--- @field defuser_dropped fun(callbackFn: fun(event: Event))
+--- @field defuser_pickup fun(callbackFn: fun(event: Event))
+--- @field announce_phase_end fun(callbackFn: fun(event: Event))
+--- @field cs_intermission fun(callbackFn: fun(event: Event))
+--- @field bomb_begindefuse fun(callbackFn: fun(event: Event))
+--- @field bomb_abortdefuse fun(callbackFn: fun(event: Event))
+--- @field hostage_follows fun(callbackFn: fun(event: Event))
+--- @field hostage_hurt fun(callbackFn: fun(event: Event))
+--- @field hostage_killed fun(callbackFn: fun(event: Event))
+--- @field hostage_rescued fun(callbackFn: fun(event: Event))
+--- @field hostage_stops_following fun(callbackFn: fun(event: Event))
+--- @field hostage_rescued_all fun(callbackFn: fun(event: Event))
+--- @field hostage_call_for_help fun(callbackFn: fun(event: Event))
+--- @field vip_escaped fun(callbackFn: fun(event: Event))
+--- @field vip_killed fun(callbackFn: fun(event: Event))
+--- @field player_radio fun(callbackFn: fun(event: Event))
+--- @field bomb_beep fun(callbackFn: fun(event: Event))
+--- @field weapon_fire fun(callbackFn: fun(event: Event))
+--- @field weapon_fire_on_empty fun(callbackFn: fun(event: Event))
+--- @field grenade_thrown fun(callbackFn: fun(event: Event))
+--- @field weapon_outofammo fun(callbackFn: fun(event: Event))
+--- @field weapon_reload fun(callbackFn: fun(event: Event))
+--- @field weapon_zoom fun(callbackFn: fun(event: Event))
+--- @field silencer_detach fun(callbackFn: fun(event: Event))
+--- @field inspect_weapon fun(callbackFn: fun(event: Event))
+--- @field weapon_zoom_rifle fun(callbackFn: fun(event: Event))
+--- @field player_spawned fun(callbackFn: fun(event: Event))
+--- @field item_pickup fun(callbackFn: fun(event: Event))
+--- @field item_pickup_slerp fun(callbackFn: fun(event: Event))
+--- @field item_pickup_failed fun(callbackFn: fun(event: Event))
+--- @field item_remove fun(callbackFn: fun(event: Event))
+--- @field ammo_pickup fun(callbackFn: fun(event: Event))
+--- @field item_equip fun(callbackFn: fun(event: Event))
+--- @field enter_buyzone fun(callbackFn: fun(event: Event))
+--- @field exit_buyzone fun(callbackFn: fun(event: Event))
+--- @field buytime_ended fun(callbackFn: fun(event: Event))
+--- @field enter_bombzone fun(callbackFn: fun(event: Event))
+--- @field exit_bombzone fun(callbackFn: fun(event: Event))
+--- @field enter_rescue_zone fun(callbackFn: fun(event: Event))
+--- @field exit_rescue_zone fun(callbackFn: fun(event: Event))
+--- @field silencer_off fun(callbackFn: fun(event: Event))
+--- @field silencer_on fun(callbackFn: fun(event: Event))
+--- @field buymenu_open fun(callbackFn: fun(event: Event))
+--- @field buymenu_close fun(callbackFn: fun(event: Event))
+--- @field round_prestart fun(callbackFn: fun(event: Event))
+--- @field round_poststart fun(callbackFn: fun(event: Event))
+--- @field round_start fun(callbackFn: fun(event: Event))
+--- @field round_end fun(callbackFn: fun(event: Event))
+--- @field grenade_bounce fun(callbackFn: fun(event: Event))
+--- @field hegrenade_detonate fun(callbackFn: fun(event: Event))
+--- @field flashbang_detonate fun(callbackFn: fun(event: Event))
+--- @field smokegrenade_detonate fun(callbackFn: fun(event: Event))
+--- @field smokegrenade_expired fun(callbackFn: fun(event: Event))
+--- @field molotov_detonate fun(callbackFn: fun(event: Event))
+--- @field decoy_detonate fun(callbackFn: fun(event: Event))
+--- @field decoy_started fun(callbackFn: fun(event: Event))
+--- @field tagrenade_detonate fun(callbackFn: fun(event: Event))
+--- @field inferno_startburn fun(callbackFn: fun(event: Event))
+--- @field inferno_expire fun(callbackFn: fun(event: Event))
+--- @field inferno_extinguish fun(callbackFn: fun(event: Event))
+--- @field decoy_firing fun(callbackFn: fun(event: Event))
+--- @field bullet_impact fun(callbackFn: fun(event: Event))
+--- @field player_footstep fun(callbackFn: fun(event: Event))
+--- @field player_jump fun(callbackFn: fun(event: Event))
+--- @field player_blind fun(callbackFn: fun(event: Event))
+--- @field player_falldamage fun(callbackFn: fun(event: Event))
+--- @field door_moving fun(callbackFn: fun(event: Event))
+--- @field round_freeze_end fun(callbackFn: fun(event: Event))
+--- @field mb_input_lock_success fun(callbackFn: fun(event: Event))
+--- @field mb_input_lock_cancel fun(callbackFn: fun(event: Event))
+--- @field nav_blocked fun(callbackFn: fun(event: Event))
+--- @field nav_generate fun(callbackFn: fun(event: Event))
+--- @field player_stats_updated fun(callbackFn: fun(event: Event))
+--- @field achievement_info_loaded fun(callbackFn: fun(event: Event))
+--- @field spec_target_updated fun(callbackFn: fun(event: Event))
+--- @field spec_mode_updated fun(callbackFn: fun(event: Event))
+--- @field hltv_changed_mode fun(callbackFn: fun(event: Event))
+--- @field cs_game_disconnected fun(callbackFn: fun(event: Event))
+--- @field cs_win_panel_round fun(callbackFn: fun(event: Event))
+--- @field cs_win_panel_match fun(callbackFn: fun(event: Event))
+--- @field cs_match_end_restart fun(callbackFn: fun(event: Event))
+--- @field cs_pre_restart fun(callbackFn: fun(event: Event))
+--- @field show_freezepanel fun(callbackFn: fun(event: Event))
+--- @field hide_freezepanel fun(callbackFn: fun(event: Event))
+--- @field freezecam_started fun(callbackFn: fun(event: Event))
+--- @field player_avenged_teammate fun(callbackFn: fun(event: Event))
+--- @field achievement_earned fun(callbackFn: fun(event: Event))
+--- @field achievement_earned_local fun(callbackFn: fun(event: Event))
+--- @field item_found fun(callbackFn: fun(event: Event))
+--- @field items_gifted fun(callbackFn: fun(event: Event))
+--- @field repost_xbox_achievements fun(callbackFn: fun(event: Event))
+--- @field match_end_conditions fun(callbackFn: fun(event: Event))
+--- @field round_mvp fun(callbackFn: fun(event: Event))
+--- @field player_decal fun(callbackFn: fun(event: Event))
+--- @field teamplay_round_start fun(callbackFn: fun(event: Event))
+--- @field show_survival_respawn_status fun(callbackFn: fun(event: Event))
+--- @field client_disconnect fun(callbackFn: fun(event: Event))
+--- @field gg_player_levelup fun(callbackFn: fun(event: Event))
+--- @field ggtr_player_levelup fun(callbackFn: fun(event: Event))
+--- @field assassination_target_killed fun(callbackFn: fun(event: Event))
+--- @field ggprogressive_player_levelup fun(callbackFn: fun(event: Event))
+--- @field gg_killed_enemy fun(callbackFn: fun(event: Event))
+--- @field gg_final_weapon_achieved fun(callbackFn: fun(event: Event))
+--- @field gg_bonus_grenade_achieved fun(callbackFn: fun(event: Event))
+--- @field switch_team fun(callbackFn: fun(event: Event))
+--- @field gg_leader fun(callbackFn: fun(event: Event))
+--- @field gg_team_leader fun(callbackFn: fun(event: Event))
+--- @field gg_player_impending_upgrade fun(callbackFn: fun(event: Event))
+--- @field write_profile_data fun(callbackFn: fun(event: Event))
+--- @field trial_time_expired fun(callbackFn: fun(event: Event))
+--- @field update_matchmaking_stats fun(callbackFn: fun(event: Event))
+--- @field player_reset_vote fun(callbackFn: fun(event: Event))
+--- @field enable_restart_voting fun(callbackFn: fun(event: Event))
+--- @field sfuievent fun(callbackFn: fun(event: Event))
+--- @field start_vote fun(callbackFn: fun(event: Event))
+--- @field player_given_c4 fun(callbackFn: fun(event: Event))
+--- @field player_become_ghost fun(callbackFn: fun(event: Event))
+--- @field gg_reset_round_start_sounds fun(callbackFn: fun(event: Event))
+--- @field tr_player_flashbanged fun(callbackFn: fun(event: Event))
+--- @field tr_mark_complete fun(callbackFn: fun(event: Event))
+--- @field tr_mark_best_time fun(callbackFn: fun(event: Event))
+--- @field tr_exit_hint_trigger fun(callbackFn: fun(event: Event))
+--- @field bot_takeover fun(callbackFn: fun(event: Event))
+--- @field tr_show_finish_msgbox fun(callbackFn: fun(event: Event))
+--- @field tr_show_exit_msgbox fun(callbackFn: fun(event: Event))
+--- @field reset_player_controls fun(callbackFn: fun(event: Event))
+--- @field jointeam_failed fun(callbackFn: fun(event: Event))
+--- @field teamchange_pending fun(callbackFn: fun(event: Event))
+--- @field material_default_complete fun(callbackFn: fun(event: Event))
+--- @field cs_prev_next_spectator fun(callbackFn: fun(event: Event))
+--- @field cs_handle_ime_event fun(callbackFn: fun(event: Event))
+--- @field nextlevel_changed fun(callbackFn: fun(event: Event))
+--- @field seasoncoin_levelup fun(callbackFn: fun(event: Event))
+--- @field tournament_reward fun(callbackFn: fun(event: Event))
+--- @field start_halftime fun(callbackFn: fun(event: Event))
+--- @field ammo_refill fun(callbackFn: fun(event: Event))
+--- @field parachute_pickup fun(callbackFn: fun(event: Event))
+--- @field parachute_deploy fun(callbackFn: fun(event: Event))
+--- @field dronegun_attack fun(callbackFn: fun(event: Event))
+--- @field drone_dispatched fun(callbackFn: fun(event: Event))
+--- @field loot_crate_visible fun(callbackFn: fun(event: Event))
+--- @field loot_crate_opened fun(callbackFn: fun(event: Event))
+--- @field open_crate_instr fun(callbackFn: fun(event: Event))
+--- @field smoke_beacon_paradrop fun(callbackFn: fun(event: Event))
+--- @field survival_paradrop_spawn fun(callbackFn: fun(event: Event))
+--- @field survival_paradrop_break fun(callbackFn: fun(event: Event))
+--- @field drone_cargo_detached fun(callbackFn: fun(event: Event))
+--- @field drone_above_roof fun(callbackFn: fun(event: Event))
+--- @field choppers_incoming_warning fun(callbackFn: fun(event: Event))
+--- @field firstbombs_incoming_warning fun(callbackFn: fun(event: Event))
+--- @field dz_item_interaction fun(callbackFn: fun(event: Event))
+--- @field snowball_hit_player_face fun(callbackFn: fun(event: Event))
+--- @field survival_teammate_respawn fun(callbackFn: fun(event: Event))
+--- @field survival_no_respawns_warning fun(callbackFn: fun(event: Event))
+--- @field survival_no_respawns_final fun(callbackFn: fun(event: Event))
+--- @field player_ping fun(callbackFn: fun(event: Event))
+--- @field player_ping_stop fun(callbackFn: fun(event: Event))
+--- @field guardian_wave_restart fun(callbackFn: fun(event: Event))
+callback = {}
+
+--- @class Color
+--- @param r number
+--- @param g number
+--- @param b number
+--- @param a? number
+--- @return { r: number, g: number, b: number, a: number }
+color = function(r, g, b, a)
+    return { r, g, b, a }
+end;
+
+--- @class Convar
+--- @field get_int fun(self: Convar): number;
+--- @field set_int fun(self: Convar, value: number);
+--- @field get_float fun(self: Convar, ): number;
+--- @field set_float fun(vself: Convar, alue: number);
+--- @field get_string fun(self: Convar, ): string;
+--- @field set_string fun(self: Convar, value: string);
+
+--- @class Entity
+--- [Props](https://gamesensical.gitbook.io/docs/developers/netprops)
+--- @field get_prop fun(self: Entity, table: string, prop: string): any
+--- @field get_origin fun(self: Entity): Vector | { x: number, y: number, z: number }
+--- @field get_velocity fun(self: Entity): Vector  | { x: number, y: number, z: number }
+
+--- @class Event
+--- @field get_name fun(self: Event): string;
+--- @field get_int fun(self: Event, key: string): number;
+--- @field set_int fun(self: Event, key: string, value: number);
+--- @field get_float fun(self: Event, key: string): number;
+--- @field set_float fun(self: Event, key: string, value: number);
+--- @field get_string fun(self: Event, key: string): string;
+--- @field set_string fun(self: Event, key: string, value: number): string;
+
+--- @class AntiAimSettings
+--- @field force_off boolean
+--- @field pitch number
+--- @field ignore_freestand boolean
+--- @field ignore_manuals boolean
+--- @field yaw_add number
+--- @field spin boolean
+--- @field spin_speed number
+--- @field spin_range number
+--- @field jitter_angle number
+--- @field align_desync boolean
+--- @field randomize_jitter	 boolean
+--- @field desync_amount number
+--- @field desync_jitter boolean
+--- @field desync_direction number
+--- @field align_by_target number
+--- @field inverter boolean
+
+--- @class UserCmd
+--- @field command_number number
+--- @field tick_count number
+--- @field view_angles number
+--- @field aim_direction number
+--- @field move number
+--- @field buttons number
+--- @field send_packet number
+
+--- @class CheatConfig
+--- @field name string
+--- Unique ID of config
+--- @field id string
+--- The name of the user who created this config
+--- @field author string
+--- The name of the user who was edited this config last time
+--- @field last_update_by string
+--- @field private boolean
+
+--- @class Font
+
+--- @class Texture
+
+--- @class Hotkey
+--- @field state fun(): boolean
+
+--- @class CheatVar
+--- @field get fun(self: CheatVar): any
+--- @field set fun(self: CheatVar, value: any);
+
+--- @class Vector
+--- @param x number
+--- @param y number
+--- @param z? number
+--- @return { x: number, y: number, z: number }
+vector = function(x, y, z)
+    return { x, y, z }
+end;
+
+--- @class UITab
+--- @field set_icon fun(self: UITab, path: string)
+--- @field set_color fun(self: UITab, color1: Color, color2?: Color)
+--- @field left UIContainer
+--- @field right UIContainer
+--- Adds tab to the menu
+--- @field register fun(self: UITab)
+
+--- @class UINode
+--- @field add fun(self: UINode, item: UINode)
+
+--- @class UIControl: UINode
+--- @field set_key fun(self: UIControl, key: string)
+--- @field get_key fun(self: UIControl): string
+
+--- @class UIContainer: UINode
+
+--- @class UICheckbox: UIControl
+--- @field get fun(self: UICheckbox): boolean
+--- @field set fun(self: UICheckbox, value: boolean)
+
+--- @class UISlider: UIControl
+--- @field get fun(self: UISlider): boolean
+--- @field set fun(self: UISlider, value: boolean)
+
+--- @class UIDropbox: UIControl
+--- @field get fun(self: UIDropbox): boolean
+--- @field set fun(self: UIDropbox, value: boolean)
+
+--- @class UIColorPicker: UIControl
+--- @field get fun(self: UIColorPicker): Color
+--- @field set fun(self: UIColorPicker, value: Color)
+
+--- @class UIButton: UIControl
+--- @field callback fun(self: UIButton)
+
+--- @alias hotkey_keys
+--- | "hotkey.thirdperson"
+--- | "hotkey.doubletap"
+--- | "hotkey.peek_assist"
+--- | "hotkey.override_damage"
+--- | "hotkey.manual_right"
+--- | "hotkey.manual_left"
+--- | "hotkey.manual_back"
+--- | "hotkey.manual_forward"
+--- | "hotkey.desync_inverter"
+--- | "hotkey.slow_walk"
+--- | "hotkey.fake_duck"
+--- | "hotkey.freestand"
+--- | "hotkey.hide_shot"
+
+--- @alias callback_name
+--- Weave callbacks
+--- | "render"
+--- | "pre_move"
+--- | "create_move"
+--- | "post_move"
+--- | "antiaim_setup"
+--- | "config_save"
+--- | "config_load"
+--- | "unload"
+--- CS:GO callbacks
+--- | "player_death"
+--- | "other_death"
+--- | "player_hurt"
+--- | "item_purchase"
+--- | "bomb_beginplant"
+--- | "bomb_abortplant"
+--- | "bomb_planted"
+--- | "bomb_defused"
+--- | "bomb_exploded"
+--- | "bomb_dropped"
+--- | "bomb_pickup"
+--- | "defuser_dropped"
+--- | "defuser_pickup"
+--- | "announce_phase_end"
+--- | "cs_intermission"
+--- | "bomb_begindefuse"
+--- | "bomb_abortdefuse"
+--- | "hostage_follows"
+--- | "hostage_hurt"
+--- | "hostage_killed"
+--- | "hostage_rescued"
+--- | "hostage_stops_following"
+--- | "hostage_rescued_all"
+--- | "hostage_call_for_help"
+--- | "vip_escaped"
+--- | "vip_killed"
+--- | "player_radio"
+--- | "bomb_beep"
+--- | "weapon_fire"
+--- | "weapon_fire_on_empty"
+--- | "grenade_thrown"
+--- | "weapon_outofammo"
+--- | "weapon_reload"
+--- | "weapon_zoom"
+--- | "silencer_detach"
+--- | "inspect_weapon"
+--- | "weapon_zoom_rifle"
+--- | "player_spawned"
+--- | "item_pickup"
+--- | "item_pickup_slerp"
+--- | "item_pickup_failed"
+--- | "item_remove"
+--- | "ammo_pickup"
+--- | "item_equip"
+--- | "enter_buyzone"
+--- | "exit_buyzone"
+--- | "buytime_ended"
+--- | "enter_bombzone"
+--- | "exit_bombzone"
+--- | "enter_rescue_zone"
+--- | "exit_rescue_zone"
+--- | "silencer_off"
+--- | "silencer_on"
+--- | "buymenu_open"
+--- | "buymenu_close"
+--- | "round_prestart"
+--- | "round_poststart"
+--- | "round_start"
+--- | "round_end"
+--- | "grenade_bounce"
+--- | "hegrenade_detonate"
+--- | "flashbang_detonate"
+--- | "smokegrenade_detonate"
+--- | "smokegrenade_expired"
+--- | "molotov_detonate"
+--- | "decoy_detonate"
+--- | "decoy_started"
+--- | "tagrenade_detonate"
+--- | "inferno_startburn"
+--- | "inferno_expire"
+--- | "inferno_extinguish"
+--- | "decoy_firing"
+--- | "bullet_impact"
+--- | "player_footstep"
+--- | "player_jump"
+--- | "player_blind"
+--- | "player_falldamage"
+--- | "door_moving"
+--- | "round_freeze_end"
+--- | "mb_input_lock_success"
+--- | "mb_input_lock_cancel"
+--- | "nav_blocked"
+--- | "nav_generate"
+--- | "player_stats_updated"
+--- | "achievement_info_loaded"
+--- | "spec_target_updated"
+--- | "spec_mode_updated"
+--- | "hltv_changed_mode"
+--- | "cs_game_disconnected"
+--- | "cs_win_panel_round"
+--- | "cs_win_panel_match"
+--- | "cs_match_end_restart"
+--- | "cs_pre_restart"
+--- | "show_freezepanel"
+--- | "hide_freezepanel"
+--- | "freezecam_started"
+--- | "player_avenged_teammate"
+--- | "achievement_earned"
+--- | "achievement_earned_local"
+--- | "item_found"
+--- | "items_gifted"
+--- | "repost_xbox_achievements"
+--- | "match_end_conditions"
+--- | "round_mvp"
+--- | "player_decal"
+--- | "teamplay_round_start"
+--- | "show_survival_respawn_status"
+--- | "client_disconnect"
+--- | "gg_player_levelup"
+--- | "ggtr_player_levelup"
+--- | "assassination_target_killed"
+--- | "ggprogressive_player_levelup"
+--- | "gg_killed_enemy"
+--- | "gg_final_weapon_achieved"
+--- | "gg_bonus_grenade_achieved"
+--- | "switch_team"
+--- | "gg_leader"
+--- | "gg_team_leader"
+--- | "gg_player_impending_upgrade"
+--- | "write_profile_data"
+--- | "trial_time_expired"
+--- | "update_matchmaking_stats"
+--- | "player_reset_vote"
+--- | "enable_restart_voting"
+--- | "sfuievent"
+--- | "start_vote"
+--- | "player_given_c4"
+--- | "player_become_ghost"
+--- | "gg_reset_round_start_sounds"
+--- | "tr_player_flashbanged"
+--- | "tr_mark_complete"
+--- | "tr_mark_best_time"
+--- | "tr_exit_hint_trigger"
+--- | "bot_takeover"
+--- | "tr_show_finish_msgbox"
+--- | "tr_show_exit_msgbox"
+--- | "reset_player_controls"
+--- | "jointeam_failed"
+--- | "teamchange_pending"
+--- | "material_default_complete"
+--- | "cs_prev_next_spectator"
+--- | "cs_handle_ime_event"
+--- | "nextlevel_changed"
+--- | "seasoncoin_levelup"
+--- | "tournament_reward"
+--- | "start_halftime"
+--- | "ammo_refill"
+--- | "parachute_pickup"
+--- | "parachute_deploy"
+--- | "dronegun_attack"
+--- | "drone_dispatched"
+--- | "loot_crate_visible"
+--- | "loot_crate_opened"
+--- | "open_crate_instr"
+--- | "smoke_beacon_paradrop"
+--- | "survival_paradrop_spawn"
+--- | "survival_paradrop_break"
+--- | "drone_cargo_detached"
+--- | "drone_above_roof"
+--- | "choppers_incoming_warning"
+--- | "firstbombs_incoming_warning"
+--- | "dz_item_interaction"
+--- | "snowball_hit_player_face"
+--- | "survival_teammate_respawn"
+--- | "survival_no_respawns_warning"
+--- | "survival_no_respawns_final"
+--- | "player_ping"
+--- | "player_ping_stop"
+--- | "guardian_wave_restart"
