@@ -1,7 +1,6 @@
 # WeaveSnippet
 
-[Documentation](https://docs.weave.su/)
-[Documentation Repository](https://github.com/Quadro1337/weave-docs)
+[Documentation](https://docs.weave.su/) | [Documentation Repository](https://github.com/Quadro1337/weave-docs)
 
 ### How to install?
 
